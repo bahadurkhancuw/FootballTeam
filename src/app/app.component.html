@@ -1,0 +1,78 @@
+<button (click)="ShowModal()">Add player</button>
+<br>
+<br>
+<div>
+  <button class="btn" (click)="getdata()">Get All players</button>
+  <button class="btn" (click)="getplayerwithMostTouchdown()">Player with Most touchdown</button>
+  <button class="btn" (click)="getPlayerwithMostRushingyards()">Player with Most Rushingyards</button>
+  <button class="btn" (click)="getPlayerwithleastRushingyards()">Player with least Rushingyards</button>
+  <button class="btn" (click)="getPlayerwithMostSacks()">Player with Most Sacks</button>
+  <button class="btn" (click)="getPlayerwithGoalsDesc()">Player with Most Goals Desc</button>
+</div>
+
+<div class="overlay" *ngIf="show">
+  <div class="content">
+    <div class="Modal-header">
+      <button (click)="CloseModal()">
+        &times;
+      </button>
+    </div>
+    <div class="modal-content">
+      <!-- <form #Football="ngForm" (ngSubmit)="onclicksubmit(Football)" class="modal-content"  [ngFormOptions]="{updateOn:'blur'}"> -->
+        <form (ngSubmit)="onclicksubmit(form)" [formGroup] ="form" class="modal-content">
+        <!-- <form [formGroup] = "formdata" (ngSubmit) = "onClickSubmit(formdata.value)" class="modal-content"> -->
+          <input type="number" hidden formControlName="_id" />
+        Name: <input type="text" name="name" formControlName="name"  required class="form-control" />
+        Position: <input type="text" name="position" formControlName="position"  required class="form-control" />
+        Team: <input type="text" name="team" formControlName="team"  required class="form-control" />
+        Rushing Yards: <input type="number" name="rushingyards" formControlName="rushingyards"  required class="form-control" />
+        Touchdowns thrown: <input type="number" name="touchdownsthrown" formControlName="touchdownsthrown" required class="form-control" />
+        Sacks: <input type="number" name="sacks" formControlName="sacks"  required class="form-control" />
+        Goals Made: <input type="number" name="fieldgoalsmade" formControlName="fieldgoalsmade" required class="form-control" />
+        Goals Missed: <input type="number" name="fieldgoalsmissed" formControlName="fieldgoalsmissed"  required class="form-control" />
+        Catches: <input type="number" name="catches" formControlName="catches"  required class="form-control" />
+        <div class="modal-footer">
+          <button class="btn-footer">Submit</button>
+        </div>
+      </form>
+      <div class="error">{{Error}}</div>
+    </div>
+
+  </div>
+
+</div>
+
+{{Successmesage}}
+<div *ngIf="data">
+  <table>
+    <tr>
+      <th hidden>ID</th>
+      <th>Name</th>
+      <th>Position</th>
+      <th>Team</th>
+      <th>Rushingyards</th>
+      <th>Touchdownsthrown</th>
+      <th>Sacks</th>
+      <th>Fieldgoalsmade</th>
+      <th>Fieldgoalsmissed</th>
+      <th>Catches</th>
+    </tr>
+
+    <tr *ngFor="let player of data, index as i">
+      <td hidden>{{player._id}}</td>
+      <td>{{player.name}}</td>
+      <td>{{player.position}}</td>
+      <td>{{player.team}}</td>
+      <td>{{player.stats.rushingyards}}</td>
+      <td>{{player.stats.touchdownsthrown}}</td>
+      <td>{{player.stats.sacks}}</td>
+      <td>{{player.stats.fieldgoalsmade}}</td>
+      <td>{{player.stats.fieldgoalsmissed}}</td>
+      <td>{{player.stats.catches}}</td>
+      <td class="Action" >
+        <button class="btn-delete" (click)="delData(player._id)">Delete</button> 
+        <button (click)="Edit(player, i)">Edit</button>
+      </td>
+    </tr>
+  </table>
+</div>
